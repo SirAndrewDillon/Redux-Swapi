@@ -1,33 +1,35 @@
-import /* we need our action types here*/ "../actions";
-import { types } from "@babel/core";
+import {
+  FETCHING_CHARACTERS,
+  FETCHING_CHARACTERS_SUCCESS,
+  FETCHING_CHARACTERS_FAILURE
+} from "../actions";
+
 const initialState = {
   characters: [],
   fetching:false,
-  fetched: false,
   error: null
   // Array characters, Boolean fetching, null error.
 };
 export const charsReducer = (state = initialState, action) => {
-  switch (action.type) {
+
     // Fill me in with the important reducers
     // action types should be FETCHING, FETCHED, and ERROR
     // your switch statement should handle all of these cases.
-    case FETCHING: 
-      return Object.assign({},state,
-        {fetching:true}
-      )
-    case FETCHED:
-    return Object.assign({},state,
-      {fetching:false,
-      fetched: true,
-      chars: action.payload}
-    )
-    case ERROR: 
-    return Object.assign({},state,{
-      fetching:false,
-      error:action.payload
-      })
-    default:
-      return state;
-  }
-};
+    switch (action.type) {
+      case FETCHING_CHARACTERS:
+        return { ...state, fetching: true };
+      case FETCHING_CHARACTERS_FAILURE:
+        return { ...state, fetching: false, error: action.payload };
+      case FETCHING_CHARACTERS_SUCCESS:
+        console.log(action.payload);
+        return {
+          ...state,
+          characters: [...state.characters, ...action.payload],
+          fetching: false
+        };
+      default:
+        return state;
+    }
+  };
+  
+   
