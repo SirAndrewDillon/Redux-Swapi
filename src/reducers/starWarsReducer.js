@@ -1,35 +1,33 @@
-import {
-  FETCHING_CHARACTERS,
-  FETCHING_CHARACTERS_SUCCESS,
-  FETCHING_CHARACTERS_FAILURE
-} from "../actions";
+import {FETCH_CHARACTER_START, FETCH_CHARACTER_SUCCESS,FETCH_CHARACTER_FAILURE} from "../actions";
 
 const initialState = {
   characters: [],
-  fetching:false,
-  error: null
+  err:'',
+  isfetching: false
   // Array characters, Boolean fetching, null error.
 };
-export const charsReducer = (state = initialState, action) => {
+switch (action.type) {
+  case FETCH_CHARACTER_START:
+  return{
+    ... state,
+    err: '',
+    isfetching: true
+  }
+  case FETCH_CHARACTER_SUCCESS:
+  return{
+    ...state,
+    err: '',
+    isfetching: false,
+    characters: action.payload
+  }
+  case FETCH_CHARACTER_FAILURE:
+  default:
+    return state;
+  // Fill me in with the important reducers
+  // action types should be FETCHING, SUCCESS and FAILURE
+  // your switch statement should handle all of these cases.
+  
+}
 
-    // Fill me in with the important reducers
-    // action types should be FETCHING, FETCHED, and ERROR
-    // your switch statement should handle all of these cases.
-    switch (action.type) {
-      case FETCHING_CHARACTERS:
-        return { ...state, fetching: true };
-      case FETCHING_CHARACTERS_FAILURE:
-        return { ...state, fetching: false, error: action.payload };
-      case FETCHING_CHARACTERS_SUCCESS:
-        console.log(action.payload);
-        return {
-          ...state,
-          characters: [...state.characters, ...action.payload],
-          fetching: false
-        };
-      default:
-        return state;
-    }
-  };
   
    
